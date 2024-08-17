@@ -40,22 +40,6 @@
             border-radius: 10px;
         }
 
-        /* Close button */
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
         /* Button styling */
         .join-button {
             background-color: #4CAF50;
@@ -82,37 +66,31 @@
     <!-- Modal Structure -->
     <div id="popupModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <h2>Thank you for using our website!</h2>
             <p>Please join our channel below:</p>
-            <a href="https://example.com" target="_blank" class="join-button">Join Our Channel</a>
+            <a id="joinLink" href="https://example.com" target="_blank" class="join-button">Join Our Channel</a>
         </div>
     </div>
 
     <script>
-        // Get the modal
+        // Get the modal and the link
         var modal = document.getElementById("popupModal");
+        var joinLink = document.getElementById("joinLink");
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // Show the modal when the page loads
+        // Show the modal 5 seconds after the page loads
         window.onload = function() {
-            modal.style.display = "block";
+            setTimeout(function() {
+                modal.style.display = "block";
+            }, 5000); // 5 seconds delay
         };
 
-        // Close the modal when the user clicks on <span> (x)
-        span.onclick = function() {
-            modal.style.display = "none";
-        };
-
-        // Close the modal when the user clicks anywhere outside of the modal
-        window.onclick = function(event) {
-            if (event.target == modal) {
+        // Hide the modal 5 seconds after the user clicks the link
+        joinLink.onclick = function() {
+            setTimeout(function() {
                 modal.style.display = "none";
-            }
+            }, 5000); // 5 seconds after clicking the link
         };
     </script>
 
 </body>
-  </html>
+    </html>
