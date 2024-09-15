@@ -3,11 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Last Day to Mine $WAT</title>
+  <title>Advanced Popups</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
     }
+
+    /* Modal background */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    /* Modal content */
+    .modal-content {
+      background-color: white;
+      margin: 15% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      border-radius: 10px;
+      position: relative; /* Added to position the close button */
+    }
+
+    /* Button styling */
+    .join-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .join-button:hover {
+      background-color: #45a049;
+    }
+
     .promo-section {
       background-color: #f5f5f5;
       border: 2px solid #00bcd4;
@@ -18,19 +68,23 @@
       margin: 50px auto;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     }
+
     .promo-section h2 {
       color: #00bcd4;
       margin-bottom: 10px;
     }
+
     .promo-section p {
       font-size: 16px;
       color: #333;
       margin-bottom: 20px;
     }
+
     .promo-section .highlight {
       font-weight: bold;
       color: #ff5722;
     }
+
     .promo-section button {
       background-color: #00bcd4;
       color: white;
@@ -41,27 +95,95 @@
       border-radius: 5px;
       transition: background-color 0.3s ease;
     }
+
     .promo-section button:hover {
       background-color: #008c9e;
+    }
+
+    /* Close (X) button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background-color: transparent;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: red;
     }
   </style>
 </head>
 <body>
 
-  <div class="promo-section">
-    <h2>⚡️ Last Day to Mine $WAT! ⚡️</h2>
-    <p>Today is your final chance to mine $WAT. After today, mining will close!</p>
-    <p class="highlight">$WAT is getting listed on <strong>September 23rd</strong>.</p>
-    <p>Get ready for the airdrop! You need a minimum of <strong>1000 WP</strong> to be eligible.</p>
-    <p>Join now and claim <strong>500 WP</strong> as a welcome bonus by clicking the button below:</p>
-    <button onclick="joinNow()">Join and Get 500 WP</button>
+  <!-- First Popup Modal Structure -->
+  <div id="popupModal" class="modal">
+    <div class="modal-content">
+      <h2>Thank you for using our website!</h2>
+      <p>Please join our channel below:</p>
+      <a id="joinLink" href="https://your-channel-link.com" target="_blank" class="join-button">Join Our Channel</a>
+    </div>
+  </div>
+
+  <!-- Second Popup Promo Section with Close Button -->
+  <div id="promoPopup" class="modal">
+    <div class="modal-content promo-section">
+      <button class="close-btn" id="closePromo">&times;</button> <!-- Added close button -->
+      <h2>⚡️ Last Day to Mine $WAT! ⚡️</h2>
+      <p>Today is your final chance to mine $WAT. After today, mining will close!</p>
+      <p class="highlight">$WAT is getting listed on <strong>September 23rd</strong>.</p>
+      <p>Get ready for the airdrop! You need a minimum of <strong>1000 WP</strong> to be eligible.</p>
+      <p>Join now and claim <strong>500 WP</strong> as a welcome bonus by clicking the button below:</p>
+      <button onclick="joinNow()">Join and Get 500 WP</button>
+    </div>
   </div>
 
   <script>
+    // Get the modal elements and buttons
+    var firstModal = document.getElementById("popupModal");
+    var secondModal = document.getElementById("promoPopup");
+    var joinLink = document.getElementById("joinLink");
+    var closePromoBtn = document.getElementById("closePromo");
+
+    // Show the first modal 5 seconds after the page loads if the user hasn't clicked before
+    window.onload = function() {
+      if (!localStorage.getItem('linkClicked')) {
+        setTimeout(function() {
+          firstModal.style.display = "block";
+        }, 5000); // 5 seconds delay
+      } else {
+        // If the user has already clicked the first popup, directly show the second popup
+        setTimeout(function() {
+          secondModal.style.display = "block";
+        }, 5000); // Show the second popup after 5 seconds
+      }
+    };
+
+    // When the user clicks the join link in the first modal
+    joinLink.onclick = function() {
+      localStorage.setItem('linkClicked', 'true');
+      setTimeout(function() {
+        firstModal.style.display = "none";
+        setTimeout(function() {
+          secondModal.style.display = "block";
+        }, 5000); // 5 seconds delay before showing the second popup
+      }, 5000); // Hide the first modal after 5 seconds
+    };
+
+    // Close the second popup when the user clicks the "X" button
+    closePromoBtn.onclick = function() {
+      secondModal.style.display = "none";
+    };
+
+    // Function to handle the action of the second popup button
     function joinNow() {
+      secondModal.style.display = "none"; // Hide the second popup immediately
       window.location.href = "https://your-join-link.com";  // Replace with actual link
     }
   </script>
 
 </body>
-    </html>
+  </html>
